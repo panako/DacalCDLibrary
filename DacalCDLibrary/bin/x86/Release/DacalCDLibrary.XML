@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DacalCDLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:DacalCDLibrary.CDLibrary">
+            <summary>
+            Class to manage Dacal's CD libraries connected to PC (Dacal DC-300).
+            </summary>
+            <remarks>
+            API and DLLs (USBCDDLL.dll) used to be available at Dacal's website: <see href="http://www.dacal.com.tw/api.html"/> but they are no longer there.
+            <para>
+            Base on following post <see href="https://sourceforge.net/p/jnative/discussion/525506/thread/095564a3/"/>
+            </para>
+            </remarks>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.InitUSBCDLibrary">
+            <summary>
+            Initialization of the library. Must be called at start of an application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CloseUSBCDLibrary">
+            <summary>
+            Should be called when application terminates.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.GetDeviceNumber">
+            <summary>
+            Get the number of device on the system. USB can support up to 127 devices on each system.
+            </summary>
+            <returns>Will return the device number now exist on the system.</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.#ctor">
+            <summary>
+            Default constructor: Dacal's CD Library manager. Initialize Library USBCDDLL.dll.
+            </summary>
+            <exception cref="T:DacalCDLibrary.CDLibraryException">Error</exception>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.DeviceChangeCallback(System.Int32)">
+            <summary>
+            This callback function is called everytime device change is detected.
+            </summary>
+            <param name="device"></param>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetConnectedDeviceNumber">
+            <summary>
+            Get number of connected devices. USB can support up to 127 devices on each system.
+            </summary>
+            <returns>Device number now exist on the system.</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetDeviceID(System.Int32)">
+            <summary>
+            Get unique device ID connected to PC.
+            Each has a fixed ID, so you can control different device via device ID.
+            </summary>
+            <param name="deviceNumber">Index of device number exist on the system (get by <see cref="M:DacalCDLibrary.CDLibrary.CDLibGetConnectedDeviceNumber"/>). First device is '0'</param>
+            <returns>Device ID</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibResetDevice(System.Int32)">
+            <summary>
+            Reset device
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetCD(System.Int32,System.Int32)">
+            <summary>
+            Move CD library to position 'CDSlot' and get CD.
+            If CD slot is out of range CD Library will do nothing.
+            </summary>
+            <param name="deviceID">Device (CD Library) number returned by <see cref="M:DacalCDLibrary.CDLibrary.CDLibGetDeviceID(System.Int32)"/></param>
+            <param name="CDSlot">CD slot number (1..150)</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetDeviceStatus(System.Int32)">
+            <summary>
+            GetDeviceStatus:
+            <para>0 - DEVICE_COMMANDOK : Command success.</para>
+            <para>1 - DEVICE_IDERROR : Device ID not exist.</para>
+            <para>2 - DEVICE_BUSY : Device is now busy, please try later.</para>
+            <para>3 - DEVICE_UNKNOWERROR : unknow error.</para>
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code:
+            <para>0 - DEVICE_COMMANDOK : Command success.</para>
+            <para>1 - DEVICE_IDERROR : Device ID not exist.</para>
+            <para>2 - DEVICE_BUSY : Device is now busy, please try later.</para>
+            <para>3 - DEVICE_UNKNOWERROR : unknow error.</para>
+            </returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetCDUP(System.Int32)">
+            <summary>
+            Get position's CD Up.
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibGetCDDown(System.Int32)">
+            <summary>
+            Get position's CD Down.
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibSetLEDDisplayOn(System.Int32)">
+            <summary>
+            Set LED display on device ON, to show CD's position.
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.CDLibSetLEDDisplayOff(System.Int32)">
+            <summary>
+            Set LED display on device to OFF.
+            </summary>
+            <param name="deviceID">Device ID</param>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.Finalize">
+            <summary>
+            Use C# destructor syntax for finalization code. Necessary for Dispose. 
+            </summary>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibrary.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="E:DacalCDLibrary.CDLibrary.CDLibOnDeviceChange">
+            <summary>
+            Event is raised when device change is detected by Dacal's DLL.
+            </summary>
+        </member>
+        <member name="T:DacalCDLibrary.CDLibrary.CDDeviceChangePROC">
+            <summary>
+            Delegate passed to callback function
+            </summary>
+            <param name="i"></param>
+        </member>
+        <member name="T:DacalCDLibrary.CDLibrary.CDLibOnDeviceChangeHandler">
+            <summary>
+            Delegate function that is called when device change is detected.
+            </summary>
+            <param name="deviceNumber"></param>
+        </member>
+        <member name="T:DacalCDLibrary.CDLibraryException">
+            <summary>
+            Exception will be thrown in case of problems with CD Library
+            </summary>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibraryException.#ctor">
+            <summary>
+            Exception will be thrown in case of problems with CD Library.
+            </summary>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibraryException.#ctor(System.String)">
+            <summary>
+            Exception will be thrown in case of problems with CD Library.
+            </summary>
+            <param name="message">information about problem</param>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibraryException.#ctor(System.String,System.Exception)">
+            <summary>
+            Exception will be thrown in case of problems with CD Library.
+            Some kind of wrapper. It contains other exception that was throw during execution.
+            </summary>
+            <param name="message">information about problem</param>
+            <param name="inner">other exception that was cought by this DLL</param>
+        </member>
+        <member name="M:DacalCDLibrary.CDLibraryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Exception will be thrown in case of problems with CD Library.
+            </summary>
+            <param name="info">information about problem</param>
+            <param name="context"></param>
+        </member>
+    </members>
+</doc>
